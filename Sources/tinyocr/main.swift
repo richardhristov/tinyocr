@@ -54,11 +54,6 @@ struct tinyocr: ArgumentParser.ParsableCommand {
                     guard let imgRef = thumbnail.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
                         fatalError("Error: could not convert NSImage to CGImage - '\(url)'")
                     }
-                    let destinationURL = url.deletingPathExtension().appendingPathExtension("\(pageIndex).png")
-                    guard let destination = CGImageDestinationCreateWithURL(destinationURL as CFURL, kUTTypePNG, 1, nil) else { fatalError(
-                        "Error: could not create CGImageDestination for '\(destinationURL)'") }
-                    CGImageDestinationAddImage(destination, imgRef, nil)
-                    CGImageDestinationFinalize(destination)
                     try? VNImageRequestHandler(cgImage: imgRef, options: [:]).perform([request])
                 }
             } else {
